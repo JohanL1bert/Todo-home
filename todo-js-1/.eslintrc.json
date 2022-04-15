@@ -15,7 +15,7 @@
     "sourceType": "module",
     "project": ["./tsconfig.json"]
   },
-  "ignorePatterns": ["webpack.config.js", "postcss.config.js"],
+  "ignorePatterns": ["webpack.config.js", "postcss.config.js", "index.d.ts"],
   "plugins": ["@typescript-eslint", "prettier"],
   "rules": {
     "no-console": 1,
