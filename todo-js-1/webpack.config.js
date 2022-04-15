@@ -1,6 +1,7 @@
 const path = require('path');
 const HTMLWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const CopyPlugin = require('copy-webpack-plugin');
 
 const isDev = process.env.NODE_ENV === 'development';
 const isProd = !isDev;
@@ -25,11 +26,14 @@ module.exports = {
     hot: true,
   },
   plugins: [
+    new CopyPlugin({
+      patterns: [{ from: 'assets', to: 'assets' }],
+    }),
     new MiniCssExtractPlugin({
       filename: `[name].css`,
     }),
     new HTMLWebpackPlugin({
-      title: 'async-race',
+      title: 'title',
       template: path.resolve(__dirname, `./src/index.html`),
       filename: `index.html`,
       minify: {

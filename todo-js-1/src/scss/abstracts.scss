@@ -1,2 +1,9 @@
 //variables
+$color-white-bg: rgb(248, 248, 248);
+
 //mixin
+@mixin reset-ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}

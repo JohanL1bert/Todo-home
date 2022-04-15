@@ -1,4 +1,124 @@
+@import '~normalize.css/normalize.css';
+@import 'abstracts';
+
 body {
   display: flex;
   flex-direction: column;
+}
+
+.container {
+  max-width: 1440px;
+  margin: auto;
+}
+
+.main {
+  height: 100vh;
+  background-color: $color-white-bg;
+}
+
+.todo {
+  &__inner {
+  }
+
+  &__header {
+    display: flex;
+    justify-content: space-between;
+    border-radius: 10px;
+    color: $color-white-bg;
+    background-color: gray;
+    margin-bottom: 20px;
+
+    &__name {
+    }
+    &__created {
+    }
+    &__category {
+    }
+    &__content {
+    }
+    &__dates {
+    }
+    &__archived {
+      &-img {
+        width: 100px;
+        height: 100px;
+      }
+    }
+    &__delete {
+    }
+  }
+  &__body {
+    &__items {
+      @include reset-ul;
+    }
+    &__item {
+      &__img {
+      }
+      &__name {
+      }
+      &__created {
+      }
+      &__category {
+      }
+      &__content {
+      }
+      &__dates {
+      }
+      &__change {
+      }
+      &__archived {
+      }
+      &__delete {
+      }
+    }
+  }
+
+  &__create {
+    display: flex;
+    justify-content: space-between;
+
+    &__form {
+    }
+    &__name {
+      &-label {
+      }
+    }
+    &__content {
+      &-label {
+      }
+    }
+    &__category {
+    }
+    &__btn {
+    }
+    &__visible {
+    }
+  }
+}
+
+.note {
+  &__inner {
+  }
+  &__header {
+    &__category {
+    }
+    &__active {
+    }
+    &__archived {
+    }
+  }
+  &__body {
+    &__inner {
+    }
+  }
+  &__items {
+  }
+  &__item {
+    &__img {
+    }
+    &__active {
+    }
+    &__archived {
+    }
+  }
 }
