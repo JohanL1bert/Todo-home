@@ -21,38 +21,17 @@
                 <img
                   src="./assets/archive.svg"
                   alt="archive all todo list"
-                  class="todo__header__icon-img"
+                  class="todo__header__icon-img icon-archive"
                 />
                 <img
                   src="./assets/garbage.svg"
                   alt="delete all todo list"
-                  class="todo__header__icon-img"
+                  class="todo__header__icon-img icon-delete"
                 />
               </div>
             </div>
             <div class="todo__body">
-              <ul class="todo__body__items">
-                <!--                 <li class="todo__item">
-                  <div class="todo__item__name__inner">
-                    <img src="${todoItem.categoryImg}" alt="status" class="todo__item__img" />
-                    <label class="todo__item__name" for="todo-input"> ${todoItem.name} </label>
-                    <input type="text" id="todo-input" class="todo__item__name-input" />
-                  </div>
-                  <div class="todo__item__created">${todoItem.created}</div>
-                  <div class="todo__item__category">${todoItem.category}</div>
-                  <div class="todo__item__content">${todoItem.content}</div>
-                  <div class="todo__item__dates">${todoItem.dates}</div>
-                  <div class="todo__item__func">
-                    <img src="${todoHelpImg.edit}" alt="edit icon" class="todo__item__change" />
-                    <img
-                      src="${todoHelpImg.arhcive}"
-                      alt="archive icon"
-                      class="todo__item__archived"
-                    />
-                    <img src="${todoHelpImg.delete}" alt="delete todo" class="todo__item__delete" />
-                  </div>
-                </li> -->
-              </ul>
+              <ul class="todo__body__items"></ul>
             </div>
           </div>
           <div class="todo__create">
@@ -87,13 +66,7 @@
             </div>
             <div class="note__body">
               <div class="note__body__inner">
-                <ul class="note__body__items">
-                  <li class="note__item">
-                    <img src="" alt="" class="note__item__img" />
-                    <div class="note__item__active"></div>
-                    <div class="note__item__archived"></div>
-                  </li>
-                </ul>
+                <ul class="note__body__items"></ul>
               </div>
             </div>
           </div>
@@ -101,7 +74,10 @@
       </section>
       <section class="archive__note">
         <div class="container">
-          <div class="archive__note__inner"></div>
+          <div class="archive__note__inner">
+            <h3 class="archive__note__header">Archived notes</h3>
+            <ul class="archive__note__items"></ul>
+          </div>
         </div>
       </section>
     </main>

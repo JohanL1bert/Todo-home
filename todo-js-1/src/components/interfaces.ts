@@ -10,4 +10,20 @@ export interface ITodo {
 export interface ISwitchCat {
   category: string;
   img: string;
+  state: number;
+}
+
+export interface IReset {
+  inputVal: HTMLInputElement;
+  inputCount: HTMLInputElement;
+  selectVal: HTMLSelectElement;
+}
+
+export interface IStore {
+  storeAchive: {
+    task: number;
+    random: number;
+    idea: number;
+    quote: number;
+  };
 }

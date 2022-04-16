@@ -40,6 +40,7 @@ body {
     }
     &__dates {
     }
+
     &__icon {
       display: flex;
       justify-content: space-between;
@@ -58,6 +59,7 @@ body {
       @include reset-ul;
     }
   }
+
   &__item {
     display: flex;
     justify-content: space-between;
@@ -80,6 +82,7 @@ body {
       &-input {
         display: none;
         border: 1px solid #ddd;
+
         &:focus {
           color: #333;
         }
@@ -88,10 +91,12 @@ body {
     &__created {
       width: 100px;
     }
+
     &__category {
       width: 100px;
       text-align: center;
     }
+
     &__content {
       width: 250px;
       max-width: 150px;
@@ -108,14 +113,17 @@ body {
       width: 100px;
       max-width: 100px;
     }
+
     &__change {
       @include sizeImg(25px, 25px);
       cursor: pointer;
     }
+
     &__archived {
       @include sizeImg(25px, 25px);
       cursor: pointer;
     }
+
     &__delete {
       @include sizeImg(25px, 25px);
       cursor: pointer;
@@ -135,6 +143,7 @@ body {
       align-items: center;
       height: 100px;
     }
+
     &__name {
       position: absolute;
       top: 100%;
@@ -148,25 +157,53 @@ body {
         top: -20%;
       }
     }
+
     &__content {
       position: absolute;
       top: 100%;
       left: 0;
       height: 50px;
     }
+
     &__category {
     }
     &__btn {
     }
     &__visible {
+      @include sizeImg(60px, 60px);
+      border: 1px solid black;
+      border-radius: 5px;
+      background-color: white;
+      cursor: pointer;
+      transition: 0.5s ease-in;
+      margin-right: 10px;
+
+      &:hover {
+        transform: scale(1.02);
+      }
+
+      &:active {
+        background-color: rgb(212, 156, 156);
+      }
     }
   }
 }
 
 .note {
   &__inner {
+    align-items: center;
+    border-radius: 10px;
+    color: $color-white-bg;
+    background-color: #888;
+    margin-bottom: 20px;
   }
+
   &__header {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    height: 50px;
+
     &__category {
     }
     &__active {
@@ -180,13 +217,43 @@ body {
   }
   &__items {
   }
+
   &__item {
+    display: flex;
+    justify-content: space-around;
+
+    &__inner {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+      width: 170px;
+    }
+
     &__img {
     }
+
     &__active {
+      padding-right: 20px;
+      margin-left: -100px;
     }
+
     &__archived {
+      padding-right: 20px;
     }
+  }
+}
+
+.archive__note {
+  &__inner {
+    height: 60px;
+    background-color: #888;
+  }
+  &__header {
+    margin-bottom: 50px;
+  }
+  &__items {
+    @include reset-ul;
   }
 }
 
