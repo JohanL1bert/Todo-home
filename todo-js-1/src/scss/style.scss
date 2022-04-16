@@ -51,41 +51,67 @@ body {
     &__items {
       @include reset-ul;
     }
-    &__item {
-      &__img {
-      }
-      &__name {
-      }
-      &__created {
-      }
-      &__category {
-      }
-      &__content {
-      }
-      &__dates {
-      }
-      &__change {
-      }
-      &__archived {
-      }
-      &__delete {
-      }
+  }
+  &__item {
+    display: flex;
+    justify-content: space-between;
+    &__img {
+      @include sizeImg(40px, 40px);
+    }
+    &__name {
+    }
+    &__created {
+    }
+    &__category {
+    }
+    &__content {
+    }
+    &__dates {
+    }
+    &__change {
+      @include sizeImg(25px, 25px);
+      cursor: pointer;
+    }
+    &__archived {
+      @include sizeImg(25px, 25px);
+      cursor: pointer;
+    }
+    &__delete {
+      @include sizeImg(25px, 25px);
+      cursor: pointer;
     }
   }
 
   &__create {
     display: flex;
     justify-content: space-between;
+    margin-top: 50px;
 
     &__form {
+      opacity: 0;
+      visibility: hidden;
+      display: flex;
+      align-items: center;
+      height: 100px;
     }
     &__name {
+      position: absolute;
+      top: 100%;
+      left: 0;
+      max-width: 100%;
+
       &-label {
+        position: relative;
+        width: 250px;
+        display: inline-block;
+        top: -20%;
       }
     }
     &__content {
-      &-label {
-      }
+      position: absolute;
+      top: 100%;
+      left: 0;
+      height: 50px;
     }
     &__category {
     }
@@ -121,4 +147,10 @@ body {
     &__archived {
     }
   }
+}
+
+.mode-visible {
+  visibility: visible;
+  opacity: 1;
+  transition: 1.5s ease-in-out;
 }

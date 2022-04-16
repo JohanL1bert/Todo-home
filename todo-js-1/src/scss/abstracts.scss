@@ -7,3 +7,8 @@ $color-white-bg: rgb(248, 248, 248);
   padding: 0;
   margin: 0;
 }
+
+@mixin sizeImg($width, $heigth) {
+  width: $width;
+  height: $heigth;
+}

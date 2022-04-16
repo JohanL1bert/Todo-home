@@ -6,3 +6,8 @@ export interface ITodo {
   content: string;
   dates: string;
 }
+
+export interface ISwitchCat {
+  category: string;
+  img: string;
+}
