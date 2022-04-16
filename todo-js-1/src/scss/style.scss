@@ -23,12 +23,14 @@ body {
   &__header {
     display: flex;
     justify-content: space-between;
+    align-items: center;
     border-radius: 10px;
     color: $color-white-bg;
-    background-color: gray;
+    background-color: #888;
     margin-bottom: 20px;
 
     &__name {
+      margin-left: 50px;
     }
     &__created {
     }
@@ -38,13 +40,17 @@ body {
     }
     &__dates {
     }
-    &__archived {
+    &__icon {
+      display: flex;
+      justify-content: space-between;
+      width: 90px;
+
       &-img {
-        width: 100px;
-        height: 100px;
+        @include sizeImg(35px, 35px);
+        cursor: pointer;
       }
-    }
-    &__delete {
+
+      margin-right: 10px;
     }
   }
   &__body {
@@ -55,18 +61,52 @@ body {
   &__item {
     display: flex;
     justify-content: space-between;
+    align-items: center;
+    background-color: rgba(98, 73, 112, 0.185);
+    margin-bottom: 20px;
+
     &__img {
       @include sizeImg(40px, 40px);
+      margin-right: 10px;
     }
+
     &__name {
+      &__inner {
+        display: flex;
+        align-items: center;
+        width: 100px;
+      }
+
+      &-input {
+        display: none;
+        border: 1px solid #ddd;
+        &:focus {
+          color: #333;
+        }
+      }
     }
     &__created {
+      width: 100px;
     }
     &__category {
+      width: 100px;
+      text-align: center;
     }
     &__content {
+      width: 250px;
+      max-width: 150px;
+      word-wrap: break-word;
     }
+
+    &__func {
+      display: flex;
+      justify-content: space-between;
+      width: 100px;
+    }
+
     &__dates {
+      width: 100px;
+      max-width: 100px;
     }
     &__change {
       @include sizeImg(25px, 25px);
@@ -79,6 +119,7 @@ body {
     &__delete {
       @include sizeImg(25px, 25px);
       cursor: pointer;
+      margin-right: 5px;
     }
   }
 
@@ -153,4 +194,17 @@ body {
   visibility: visible;
   opacity: 1;
   transition: 1.5s ease-in-out;
+}
+
+.mode-edit .todo__item__name {
+  display: none;
+}
+
+.mode-edit .todo__item__name-input {
+  display: inline-block;
+  width: 220px;
+}
+
+input {
+  outline: none;
 }
