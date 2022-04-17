@@ -17,9 +17,6 @@ body {
 }
 
 .todo {
-  &__inner {
-  }
-
   &__header {
     display: flex;
     justify-content: space-between;
@@ -31,14 +28,6 @@ body {
 
     &__name {
       margin-left: 50px;
-    }
-    &__created {
-    }
-    &__category {
-    }
-    &__content {
-    }
-    &__dates {
     }
 
     &__icon {
@@ -61,11 +50,7 @@ body {
   }
 
   &__item {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background-color: rgba(98, 73, 112, 0.185);
-    margin-bottom: 20px;
+    @include li-container;
 
     &__img {
       @include sizeImg(40px, 40px);
@@ -74,9 +59,7 @@ body {
 
     &__name {
       &__inner {
-        display: flex;
-        align-items: center;
-        width: 100px;
+        @include todo-inner;
       }
 
       &-input {
@@ -88,6 +71,7 @@ body {
         }
       }
     }
+
     &__created {
       width: 100px;
     }
@@ -104,9 +88,7 @@ body {
     }
 
     &__func {
-      display: flex;
-      justify-content: space-between;
-      width: 100px;
+      @include todo-func;
     }
 
     &__dates {
@@ -165,10 +147,6 @@ body {
       height: 50px;
     }
 
-    &__category {
-    }
-    &__btn {
-    }
     &__visible {
       @include sizeImg(60px, 60px);
       border: 1px solid black;
@@ -203,19 +181,6 @@ body {
     justify-content: space-around;
     align-items: center;
     height: 50px;
-
-    &__category {
-    }
-    &__active {
-    }
-    &__archived {
-    }
-  }
-  &__body {
-    &__inner {
-    }
-  }
-  &__items {
   }
 
   &__item {
@@ -228,9 +193,6 @@ body {
       align-items: center;
       margin-bottom: 20px;
       width: 170px;
-    }
-
-    &__img {
     }
 
     &__active {
@@ -257,6 +219,60 @@ body {
   }
 }
 
+.archive {
+  &__item {
+    @include li-container;
+
+    &__name__inner {
+      @include todo-inner;
+    }
+
+    &__name {
+      &-input {
+      }
+    }
+
+    &__img {
+      @include sizeImg(40px, 40px);
+      margin-right: 10px;
+    }
+
+    &__created {
+      width: 100px;
+    }
+
+    &__category {
+      width: 100px;
+      text-align: center;
+    }
+
+    &__content {
+      width: 250px;
+      max-width: 150px;
+      word-wrap: break-word;
+    }
+
+    &__dates {
+      width: 100px;
+      max-width: 100px;
+    }
+
+    &__func {
+      @include todo-func;
+    }
+    &__archived {
+      @include sizeImg(25px, 25px);
+      cursor: pointer;
+      background-color: rgb(230, 122, 122);
+    }
+    &__delete {
+      @include sizeImg(25px, 25px);
+      cursor: pointer;
+      margin-right: 5px;
+    }
+  }
+}
+
 .mode-visible {
   visibility: visible;
   opacity: 1;
@@ -274,4 +290,8 @@ body {
 
 input {
   outline: none;
+}
+
+.edit-img {
+  background-color: rgb(10, 189, 129);
 }

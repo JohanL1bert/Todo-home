@@ -12,3 +12,23 @@ $color-white-bg: rgb(248, 248, 248);
   width: $width;
   height: $heigth;
 }
+
+@mixin li-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: rgba(98, 73, 112, 0.185);
+  margin-bottom: 20px;
+}
+
+@mixin todo-inner {
+  display: flex;
+  align-items: center;
+  width: 100px;
+}
+
+@mixin todo-func {
+  display: flex;
+  justify-content: space-between;
+  width: 100px;
+}

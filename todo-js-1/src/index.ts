@@ -1,6 +1,6 @@
 import './scss/style.scss';
 import { MainPage } from './components/main-page';
-import { store } from './components/helpers';
+import { SingletonReproducer } from './components/state';
 
 class Root {
   mainController: MainPage;
@@ -13,7 +13,9 @@ class Root {
   }
 }
 
-const mainController = new MainPage(store);
+const getInstanceOfStateManager = SingletonReproducer.getInstance();
+
+const mainController = new MainPage(getInstanceOfStateManager);
 
 const root = new Root(mainController);
 root.play();

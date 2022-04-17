@@ -1,40 +1,37 @@
-import { ITodo, ISwitchCat, IReset, IStore } from './interfaces';
-import { switchCategory, optionsDate, todoHelpImg, regPattern, configObs } from './helpers';
+import { ITodo, ISwitchCat, IReset, IStoreTodo, IActiveTodo, IActiveNote } from './interfaces';
+import { optionsDate, todoHelpImg, regPattern, configObs, switchCategory } from './helpers';
+import { StateManager } from './state';
 
 export class MainPage {
-  isEdit: boolean;
   todoForm: HTMLFormElement;
   visibleNotesBtn: HTMLButtonElement;
   createNoteBtn: HTMLButtonElement;
   contentName: HTMLInputElement;
   contentCont: HTMLInputElement;
   selectOpt: HTMLSelectElement;
-  ulTag: HTMLUListElement;
+  todoBodyItems: HTMLUListElement;
   todoChange: HTMLImageElement;
   archiveAllTodoBtn: HTMLImageElement;
   deleteAllTodoBtn: HTMLImageElement;
   ulArchiveNotes: HTMLUListElement;
   noteBodyItems: HTMLUListElement;
-  activeCounter: number;
-  activeArchive: number;
-  store: IStore;
-  constructor(store: IStore) {
-    this.isEdit = false;
+  store: StateManager;
+  toggleArchive: boolean;
+  constructor(store: StateManager) {
     this.visibleNotesBtn = document.querySelector('.todo__create__visible') as HTMLButtonElement;
     this.todoForm = document.querySelector('.todo__create__form') as HTMLFormElement;
     this.createNoteBtn = document.querySelector('.todo__create__btn') as HTMLButtonElement;
     this.contentName = document.querySelector('.todo__create__name') as HTMLInputElement;
     this.contentCont = document.querySelector('.todo__create__content') as HTMLInputElement;
     this.selectOpt = document.querySelector('.todo__create__category') as HTMLSelectElement;
-    this.ulTag = document.querySelector('.todo__body__items') as HTMLUListElement;
+    this.todoBodyItems = document.querySelector('.todo__body__items') as HTMLUListElement;
     this.todoChange = document.querySelector('.todo__item__change') as HTMLImageElement;
     this.archiveAllTodoBtn = document.querySelector('.icon-archive') as HTMLImageElement;
     this.deleteAllTodoBtn = document.querySelector('.icon-delete') as HTMLImageElement;
     this.ulArchiveNotes = document.querySelector('.archive__note__items') as HTMLUListElement;
     this.noteBodyItems = document.querySelector('.note__body__items') as HTMLUListElement;
-    this.activeCounter = 0;
-    this.activeArchive = 0;
     this.store = store;
+    this.toggleArchive = false;
   }
 
   public enterPress(event: KeyboardEvent) {
@@ -46,6 +43,251 @@ export class MainPage {
 
   private visibleFormNotes() {
     this.todoForm.classList.add('mode-visible');
+  }
+
+  private createTodo(todo: IStoreTodo) {
+    return `
+      <li class="todo__item" data-todo="${todo.id}">
+      <div class="todo__item__name__inner">
+        <img src="${todo.todoImg}" alt="status" class="todo__item__img" />
+        <label class="todo__item__name" for="todo-input"> ${todo.todoName} </label>
+        <input type="text" id="todo-input" class="todo__item__name-input" />
+      </div>
+      <div class="todo__item__created">${todo.todoCreated}</div>
+      <div class="todo__item__category">${todo.todoCategory}</div>
+      <div class="todo__item__content">${todo.todoContent}</div>
+      <div class="todo__item__dates">${todo.todoDates}</div>
+      <div class="todo__item__func">
+        <img src="${todoHelpImg.edit}" alt="edit icon" class="todo__item__change" />
+        <img
+          src="${todoHelpImg.arhcive}"
+          alt="archive icon"
+          class="todo__item__archived"
+        />
+        <img src="${todoHelpImg.delete}" alt="delete todo" class="todo__item__delete" />
+      </div>
+    </li>`;
+  }
+
+  private createNoteAct(todoItem: IActiveNote) {
+    return `<li class="note__item">
+        <div class="note__item__inner">
+          <img src="${todoItem.img}" alt="status" class="todo__item__img" />
+          <div class="note__item__name">${todoItem.name}</div>
+        </div>
+        <div class="note__item__active">${todoItem.active}</div>
+        <div class="note__item__archived">${todoItem.archive}</div>
+      </li>`;
+  }
+
+  private creatNoteArchive(archive: IStoreTodo) {
+    return `<li class="archive__item" data-todo="${archive.id}">
+    <div class="archive__item__name__inner">
+      <img src="${archive.todoImg}" alt="status" class="archive__item__img" />
+      <label class="archive__item__name" for="todo-input"> ${archive.todoName} </label>
+    </div>
+    <div class="archive__item__created">${archive.todoCreated}</div>
+    <div class="archive__item__category">${archive.todoCategory}</div>
+    <div class="archive__item__content">${archive.todoContent}</div>
+    <div class="archive__item__dates">${archive.todoDates}</div>
+    <div class="archive__item__func">
+      <img
+        src="${todoHelpImg.arhcive}"
+        alt="archive icon"
+        class="archive__item__archived"
+      />
+      <img
+        src="${todoHelpImg.delete}"
+        alt="delete todo"
+        class="archive__item__delete"
+      />
+    </div>
+  </li>`;
+  }
+
+  private replaceAllHtml() {
+    this.todoBodyItems.replaceChildren();
+    this.ulArchiveNotes.replaceChildren();
+    this.noteBodyItems.replaceChildren();
+  }
+
+  private editBtn(event: Event) {
+    const element = event.target as HTMLElement;
+    const getLiElement = element.closest('li');
+    getLiElement?.classList.add('mode-edit');
+
+    if (element.classList.contains('edit-img')) {
+      const inputHtml = getLiElement?.querySelector('.todo__item__name-input') as HTMLInputElement;
+      const inputValue = inputHtml.value;
+      const getId = Number(getLiElement?.dataset.todo);
+      const newStore = this.store.store.map((el) => {
+        if (el.id === getId) {
+          el.todoName = inputValue;
+        }
+        return el;
+      });
+
+      this.store.store = newStore;
+
+      element.classList.remove('edit-img');
+      getLiElement?.classList.remove('mode-edit');
+
+      this.replaceAllHtml();
+      this.init();
+    } else {
+      element.classList.add('edit-img');
+    }
+  }
+
+  private archiveBtn(event: Event) {
+    const htmlEl = event.target as HTMLElement;
+    const liEl = htmlEl.closest('li');
+    const getId = liEl?.dataset.todo;
+
+    const newStore = this.store.store.map((el) => {
+      if (el.id === Number(getId)) {
+        el.active = false;
+        el.archive = true;
+      }
+      return el;
+    });
+
+    this.store.store = newStore;
+    this.replaceAllHtml();
+    this.init();
+  }
+
+  private deleteBtn(event: Event) {
+    const htmlEl = event.target as HTMLElement;
+    const liEl = htmlEl?.closest('li');
+    const getId = liEl?.dataset.todo;
+    const newStore = this.store.store.filter((el) => el.id !== Number(getId));
+
+    this.store.store = newStore;
+
+    this.replaceAllHtml();
+    this.init();
+  }
+
+  private unArchiveBtn(event: Event) {
+    const htmlEl = event.target as HTMLElement;
+    const liEl = htmlEl.closest('li');
+    const getId = liEl?.dataset.todo;
+
+    const newStore = this.store.store.map((el) => {
+      if (el.id === Number(getId)) {
+        el.active = true;
+        el.archive = false;
+      }
+      return el;
+    });
+
+    this.store.store = newStore;
+
+    this.replaceAllHtml();
+    this.init();
+  }
+
+  private gelAllListener() {
+    const getTodoEdit = document.querySelectorAll('.todo__item__change');
+    const getTodoArchive = document.querySelectorAll('.todo__item__archived');
+    const getTodoDelete = document.querySelectorAll('.todo__item__delete');
+    const getArchiveUn = document.querySelectorAll('.archive__item');
+    const getArchiveDelete = document.querySelectorAll('.archive__item__delete');
+
+    getTodoArchive.forEach((element) =>
+      element.addEventListener('click', this.archiveBtn.bind(this))
+    );
+
+    getTodoDelete.forEach((element) =>
+      element.addEventListener('click', this.deleteBtn.bind(this))
+    );
+
+    getArchiveDelete.forEach((element) =>
+      element.addEventListener('click', this.deleteBtn.bind(this))
+    );
+
+    getArchiveUn.forEach((element) =>
+      element.addEventListener('click', this.unArchiveBtn.bind(this))
+    );
+
+    getTodoEdit.forEach((element) => element.addEventListener('click', this.editBtn.bind(this)));
+  }
+
+  private deleteAllTodos() {
+    this.store.store.splice(0, this.store.store.length);
+
+    this.replaceAllHtml();
+    this.init();
+  }
+
+  private archiveAllTodos() {
+    this.toggleArchive = !this.toggleArchive;
+
+    if (this.toggleArchive) {
+      this.store.store.forEach((element) => {
+        (element.active = false), (element.archive = true);
+      });
+    } else {
+      this.store.store.forEach((element) => {
+        (element.active = true), (element.archive = false);
+      });
+    }
+
+    this.replaceAllHtml();
+    this.init();
+  }
+
+  private categoryActiveFilter(todo: Array<IStoreTodo>) {
+    const ActiveTodo: IActiveTodo = {
+      task: {
+        active: 0,
+        archive: 0,
+      },
+      random: {
+        active: 0,
+        archive: 0,
+      },
+      idea: {
+        active: 0,
+        archive: 0,
+      },
+      quote: {
+        active: 0,
+        archive: 0,
+      },
+    };
+
+    todo.map((element) => {
+      if (element.todoCategory === 'Task') {
+        element.active ? (ActiveTodo.task.active += 1) : (ActiveTodo.task.archive += 1);
+
+        ActiveTodo.task.name = element.todoCategory;
+        ActiveTodo.task.img = element.todoImg;
+      }
+      if (element.todoCategory === 'Random Thought') {
+        if (element.active) ActiveTodo.random.active += 1;
+        if (element.archive) ActiveTodo.random.archive += 1;
+
+        ActiveTodo.random.name = element.todoCategory;
+        ActiveTodo.random.img = element.todoImg;
+      }
+      if (element.todoCategory === 'Idea') {
+        if (element.active) ActiveTodo.idea.active += 1;
+        if (element.archive) ActiveTodo.idea.archive += 1;
+
+        ActiveTodo.idea.name = element.todoCategory;
+        ActiveTodo.idea.img = element.todoImg;
+      }
+      if (element.todoCategory === 'Quote') {
+        if (element.active) ActiveTodo.quote.active += 1;
+        if (element.archive) ActiveTodo.quote.archive += 1;
+        ActiveTodo.quote.name = element.todoCategory;
+        ActiveTodo.quote.img = element.todoImg;
+      }
+    });
+
+    return ActiveTodo;
   }
 
   private parseContentDates(content: string) {
@@ -72,181 +314,71 @@ export class MainPage {
     };
   }
 
-  private createTodo(todoItem: ITodo) {
-    return `
-    <li class="todo__item">
-    <div class="todo__item__name__inner">
-      <img src="${todoItem.categoryImg}" alt="status" class="todo__item__img" />
-      <label class="todo__item__name" for="todo-input"> ${todoItem.name} </label>
-      <input type="text" id="todo-input" class="todo__item__name-input" />
-    </div>
-    <div class="todo__item__created">${todoItem.created}</div>
-    <div class="todo__item__category">${todoItem.category}</div>
-    <div class="todo__item__content">${todoItem.content}</div>
-    <div class="todo__item__dates">${todoItem.dates}</div>
-    <div class="todo__item__func">
-      <img src="${todoHelpImg.edit}" alt="edit icon" class="todo__item__change" />
-      <img
-        src="${todoHelpImg.arhcive}"
-        alt="archive icon"
-        class="todo__item__archived"
-      />
-      <img src="${todoHelpImg.delete}" alt="delete todo" class="todo__item__delete" />
-    </div>
-  </li>`;
-  }
-
-  private appendTodo(todo: string) {
-    this.ulTag.insertAdjacentHTML('beforeend', todo);
-  }
-
-  private resetValue(property: IReset) {
-    const { inputVal, inputCount, selectVal } = property;
-    inputVal.value = '';
-    inputCount.value = '';
-    selectVal.value = 'Task';
-  }
-
   private createNotes(event: Event) {
     event.preventDefault();
     const name = this.contentName.value;
     const content = this.contentCont.value;
     const opt = this.selectOpt.value;
-    const { category, img, state }: ISwitchCat = switchCategory(opt, this.store);
+
+    const getLen = this.store.store.length + 1;
+
+    const { category, img } = switchCategory(opt);
+
     const dateObj = new Date();
     const date = dateObj.toLocaleDateString('en-Us', optionsDate);
     const { contentText, dateContent } = this.parseContentDates(content);
 
-    const todoValue: ITodo = {
-      categoryImg: img,
-      name: name,
-      created: date,
-      category: category,
-      content: contentText,
-      dates: dateContent,
+    const createNewObj = {
+      id: getLen,
+      todoImg: `${img}`,
+      todoName: name,
+      todoCreated: date,
+      todoCategory: category,
+      todoContent: contentText,
+      todoDates: dateContent,
+      active: true,
+      archive: false,
     };
 
-    const htmlTodo = this.createTodo(todoValue);
-    this.appendTodo(htmlTodo);
+    this.store.store.push(createNewObj);
 
     this.todoForm.classList.remove('mode-visible');
-
-    const property: IReset = {
-      inputVal: this.contentName,
-      inputCount: this.contentCont,
-      selectVal: this.selectOpt,
-    };
-
-    this.resetValue(property);
-
-    const noteActObj = {
-      categoryImg: todoValue.categoryImg,
-      category: todoValue.category,
-      counterActive: state,
-    };
-
-    if (state === 1) {
-      const element = this.createNoteAct(noteActObj);
-      this.noteBodyItems.insertAdjacentHTML('afterbegin', element);
-    } else {
-      const getNode = this.noteBodyItems.querySelectorAll('.note__item__name');
-      getNode.forEach((element, index) => {
-        if (element.innerHTML === todoValue.category) {
-          const getNodeValue = this.noteBodyItems.querySelectorAll('.note__item__active')[
-            index
-          ] as HTMLInputElement;
-          getNodeValue.textContent = String(Number(getNodeValue.textContent) + 1);
-        }
-      });
-    }
+    this.replaceAllHtml();
+    this.init();
   }
 
-  private editTodo(event: Event) {
-    const el = event.target as Element;
-    if (el) {
-      const element = el.closest('li');
-      element?.classList.add('mode-edit');
-    }
-  }
+  private init() {
+    //Render todo list
+    const htmlRender = this.store.store
+      .filter((storeELement) => storeELement.active === true)
+      .map((element) => this.createTodo(element));
+    htmlRender.map((element) => this.todoBodyItems.insertAdjacentHTML('afterbegin', element));
 
-  private deleteNode(event: Event) {
-    const val = event.target as HTMLLIElement;
-    const elementLi = val.closest('li');
-    const category = elementLi?.querySelector('.todo__item__category')?.textContent;
-    const nodeOfLi = document.querySelectorAll('.note__item');
-    nodeOfLi.forEach((element) => {
-      const nameEl = element.querySelector('.note__item__name');
-      if (nameEl === category) {
-        const acitvEl = element.querySelector('.note__item__active') as HTMLElement;
-        acitvEl.textContent = String(Number(acitvEl?.textContent) - 1);
-      }
-    });
-    elementLi?.remove();
-  }
+    //render and filter active notes
 
-  private archiveTodo(event: Event) {
-    const el = event.target as Element;
-    if (el) {
-      const element = el.closest('li');
-      /*       this.checkerNode(element!); */
-      this.ulArchiveNotes.insertAdjacentElement('afterbegin', element!);
-    }
-  }
+    const htmlActive = this.categoryActiveFilter(this.store.store);
+    const arrActive = Object.keys(htmlActive).map((key) => htmlActive[key as keyof IActiveTodo]);
+    const activeNote = arrActive
+      .filter((element) => element.active > 0 || element.archive > 0)
+      .sort((a, b) => Number(a.active) - Number(b.active)) as unknown as IActiveNote[]; //Поганий каст
 
-  private deleteAllTodo() {
-    const getAllTodo = document.querySelectorAll('.todo__item');
-    const noteAllTodo = document.querySelectorAll('.note__item');
-    if (getAllTodo.length !== 0 || noteAllTodo.length !== 0) {
-      getAllTodo.forEach((elementTodo) => elementTodo.remove());
-      noteAllTodo.forEach((elementNote) => elementNote.remove());
-      Object.keys(this.store.storeAchive).forEach(
-        (key) => (this.store.storeAchive[key as keyof typeof this.store.storeAchive] = 0)
-      );
-    }
-  }
+    const htmlActiveNote = activeNote.map((el) => this.createNoteAct(el));
+    htmlActiveNote.map((element) => this.noteBodyItems.insertAdjacentHTML('afterbegin', element));
 
-  private archiveAllTodo() {
-    const getAllTodo = document.querySelectorAll('.todo__item');
-    if (getAllTodo.length !== 0) {
-      getAllTodo.forEach((elementTodo) =>
-        this.ulArchiveNotes.insertAdjacentElement('afterbegin', elementTodo)
-      );
-    }
-  }
+    //archive filter and render
+    const filterActive = this.store.store.filter((storeElement) => storeElement.archive === true);
+    const getArchiveNotes = filterActive.map((element) => this.creatNoteArchive(element));
+    getArchiveNotes.map((element) => this.ulArchiveNotes.insertAdjacentHTML('afterbegin', element));
 
-  private createNoteAct(todoItem: {
-    categoryImg: string;
-    category: string;
-    counterActive: number;
-  }) {
-    return `<li class="note__item">
-        <div class="note__item__inner">
-          <img src="${todoItem.categoryImg}" alt="status" class="todo__item__img" />
-          <div class="note__item__name">${todoItem.category}</div>
-        </div>
-        <div class="note__item__active">${todoItem.counterActive}</div>
-        <div class="note__item__archived">${0}</div>
-      </li>`;
-  }
-
-  private getTodofunc() {
-    const getEdit = document.querySelectorAll('.todo__item__change');
-    const getArchive = document.querySelectorAll('.todo__item__archived');
-    const getDelete = document.querySelectorAll('.todo__item__delete');
-
-    getEdit.forEach((edit) => edit.addEventListener('click', this.editTodo.bind(this)));
-    getArchive.forEach((archive) => archive.addEventListener('click', this.archiveTodo.bind(this)));
-    getDelete.forEach((del) => del.addEventListener('click', this.deleteNode.bind(this)));
+    this.gelAllListener();
   }
 
   public rootMainPage() {
+    this.init();
     this.visibleNotesBtn.addEventListener('click', this.visibleFormNotes.bind(this));
     this.createNoteBtn.addEventListener('click', this.createNotes.bind(this));
-    this.deleteAllTodoBtn.addEventListener('click', this.deleteAllTodo.bind(this));
-    this.archiveAllTodoBtn.addEventListener('click', this.archiveAllTodo.bind(this));
-
-    const observer = new MutationObserver(this.getTodofunc.bind(this));
-    observer.observe(this.ulTag, configObs);
+    this.deleteAllTodoBtn.addEventListener('click', this.deleteAllTodos.bind(this));
+    this.archiveAllTodoBtn.addEventListener('click', this.archiveAllTodos.bind(this));
 
     window.addEventListener('keypress', this.enterPress.bind(this));
   }
