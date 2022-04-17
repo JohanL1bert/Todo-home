@@ -1,5 +1,5 @@
-import { ITodo, ISwitchCat, IReset, IStoreTodo, IActiveTodo, IActiveNote } from './interfaces';
-import { optionsDate, todoHelpImg, regPattern, configObs, switchCategory } from './helpers';
+import { IStoreTodo, IActiveTodo, IActiveNote } from './interfaces';
+import { optionsDate, todoHelpImg, regPattern, switchCategory } from './helpers';
 import { StateManager } from './state';
 
 export class MainPage {

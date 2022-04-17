@@ -44,5 +44,3 @@ export const todoHelpImg = {
 };
 
 export const regPattern = /[0-9]{1,}\/[0-9]{1,}\/[0-9]{4}/g;
-
-export const configObs = { attributes: false, childList: true, subtree: true };
