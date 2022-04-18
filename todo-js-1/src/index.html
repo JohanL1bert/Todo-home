@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Todo</title>
+  </head>
+  <body>
+    <main class="main">
+      <section class="todo">
+        <div class="container">
+          <div class="todo__inner">
+            <div class="todo__header">
+              <p class="todo__header__name">Name</p>
+              <p class="todo__header__created">Created</p>
+              <p class="todo__header__category">Category</p>
+              <p class="todo__header__content">Content</p>
+              <p class="todo__header__dates">Dates</p>
+              <div class="todo__header__icon">
+                <img
+                  src="./assets/archive.svg"
+                  alt="archive all todo list"
+                  class="todo__header__icon-img icon-archive"
+                />
+                <img
+                  src="./assets/garbage.svg"
+                  alt="delete all todo list"
+                  class="todo__header__icon-img icon-delete"
+                />
+              </div>
+            </div>
+            <div class="todo__body">
+              <ul class="todo__body__items"></ul>
+            </div>
+          </div>
+          <div class="todo__create">
+            <form action="" class="todo__create__form">
+              <label for="" class="todo__create__name-label">
+                Name:
+                <input type="text" class="todo__create__name" />
+              </label>
+              <label for="" class="todo__create__name-label">
+                Content:
+                <textarea class="todo__create__content" >
+              </label>
+              <select name="select" class="todo__create__category">
+                <option value="Task">Task</option>
+                <option value="Random Thought">Random Thought</option>
+                <option value="Idea">Idea</option>
+                <option value="Quote">Quote</option>
+              </select>
+              <button class="todo__create__btn">Create</button>
+            </form>
+            <button class="todo__create__visible">Create note</button>
+          </div>
+        </div>
+      </section>
+      <section class="note">
+        <div class="container">
+          <div class="note__inner">
+            <div class="note__header">
+              <div class="note__header__category">Note Category</div>
+              <div class="note__header__active">Active</div>
+              <div class="note__header__archived">Archived</div>
+            </div>
+            <div class="note__body">
+              <div class="note__body__inner">
+                <ul class="note__body__items"></ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <section class="archive__note">
+        <div class="container">
+          <div class="archive__note__inner">
+            <h3 class="archive__note__header">Archived notes</h3>
+            <ul class="archive__note__items"></ul>
+          </div>
+        </div>
+      </section>
+    </main>
+  </body>
+</html>

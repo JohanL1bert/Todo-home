@@ -1,0 +1,338 @@
+@import '~normalize.css/normalize.css';
+@import 'abstracts';
+
+body {
+  display: flex;
+  flex-direction: column;
+}
+
+.container {
+  max-width: 1440px;
+  margin: auto;
+}
+
+.main {
+  height: 100vh;
+  background-color: $color-white-bg;
+}
+
+.todo {
+  &__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-radius: 10px;
+    color: $color-white-bg;
+    background-color: #888;
+    margin-bottom: 20px;
+    @include fonts-text;
+    font-size: 17px;
+
+    &__name {
+      margin-left: 50px;
+    }
+
+    &__icon {
+      display: flex;
+      justify-content: space-between;
+      width: 90px;
+
+      &-img {
+        @include sizeImg(35px, 35px);
+        cursor: pointer;
+      }
+
+      margin-right: 10px;
+    }
+  }
+  &__body {
+    &__items {
+      @include reset-ul;
+      @include fonts-text;
+    }
+  }
+
+  &__item {
+    @include li-container;
+    padding: 10px;
+
+    &__img {
+      @include sizeImg(40px, 40px);
+      margin-right: 10px;
+    }
+
+    &__name {
+      &__inner {
+        @include todo-inner;
+      }
+
+      &-input {
+        display: none;
+        border: 1px solid #ddd;
+        max-width: 110px;
+
+        &:focus {
+          color: #333;
+        }
+      }
+    }
+
+    &__created {
+      width: 100px;
+    }
+
+    &__category {
+      width: 100px;
+      text-align: center;
+    }
+
+    &__content {
+      width: 250px;
+      max-width: 150px;
+      word-wrap: break-word;
+    }
+
+    &__func {
+      @include todo-func;
+    }
+
+    &__dates {
+      width: 100px;
+      max-width: 100px;
+    }
+
+    &__change {
+      @include sizeImg(25px, 25px);
+      cursor: pointer;
+    }
+
+    &__archived {
+      @include sizeImg(25px, 25px);
+      cursor: pointer;
+    }
+
+    &__delete {
+      @include sizeImg(25px, 25px);
+      cursor: pointer;
+      margin-right: 5px;
+    }
+  }
+
+  &__create {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 50px;
+
+    &__form {
+      opacity: 0;
+      visibility: hidden;
+      display: flex;
+      align-items: center;
+      height: 100px;
+      margin-bottom: 50px;
+    }
+
+    &__name {
+      position: absolute;
+      top: 100%;
+      left: 0;
+      max-width: 100%;
+
+      &-label {
+        position: relative;
+        width: 250px;
+        display: inline-block;
+        top: -20%;
+      }
+    }
+
+    &__category {
+      margin-right: 50px;
+    }
+
+    &__btn {
+      padding: 10px;
+    }
+
+    &__content {
+      position: absolute;
+      top: 100%;
+      left: 0;
+      height: 50px;
+      resize: none;
+    }
+
+    &__visible {
+      @include sizeImg(60px, 60px);
+      border: 1px solid black;
+      border-radius: 5px;
+      background-color: white;
+      cursor: pointer;
+      transition: 0.5s ease-in;
+      margin-right: 10px;
+
+      &:hover {
+        transform: scale(1.02);
+      }
+
+      &:active {
+        background-color: rgb(212, 156, 156);
+      }
+    }
+  }
+}
+
+.note {
+  &__body__items {
+    @include fonts-text;
+  }
+  &__inner {
+    align-items: center;
+    border-radius: 10px;
+    color: $color-white-bg;
+    background-color: #888;
+    margin-bottom: 20px;
+  }
+
+  &__header {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    height: 50px;
+    @include fonts-text;
+    font-size: 17px;
+  }
+
+  &__item {
+    display: flex;
+    justify-content: space-around;
+
+    &__inner {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+      width: 170px;
+    }
+
+    &__active {
+      padding-right: 20px;
+      margin-left: -100px;
+    }
+
+    &__archived {
+      padding-right: 20px;
+    }
+  }
+}
+
+.archive__note {
+  &__inner {
+    height: 50px;
+    background-color: #888;
+  }
+
+  &__header {
+    height: 50px;
+    line-height: 50px;
+    text-align: center;
+  }
+
+  &__items {
+    @include reset-ul;
+    @include fonts-text;
+  }
+}
+
+.archive {
+  &__item {
+    @include li-container;
+    padding: 10px;
+
+    &__name__inner {
+      @include todo-inner;
+    }
+
+    &__img {
+      @include sizeImg(40px, 40px);
+      margin-right: 10px;
+    }
+
+    &__created {
+      width: 100px;
+    }
+
+    &__category {
+      width: 100px;
+      text-align: center;
+    }
+
+    &__content {
+      width: 250px;
+      max-width: 150px;
+      word-wrap: break-word;
+    }
+
+    &__dates {
+      width: 100px;
+      max-width: 100px;
+    }
+
+    &__func {
+      @include todo-func;
+      width: 70px;
+    }
+    &__archived {
+      @include sizeImg(25px, 25px);
+      cursor: pointer;
+      background-color: rgb(230, 122, 122);
+    }
+    &__delete {
+      @include sizeImg(25px, 25px);
+      cursor: pointer;
+      margin-right: 5px;
+    }
+  }
+}
+
+.mode-visible {
+  visibility: visible;
+  opacity: 1;
+  transition: 1.5s ease-in-out;
+}
+
+.mode-edit .todo__item__name {
+  display: none;
+}
+
+.mode-edit .todo__item__name-input {
+  display: inline-block;
+  width: 220px;
+}
+
+input,
+textarea {
+  outline: none;
+}
+
+.edit-img {
+  background-color: rgb(10, 189, 129);
+}
+
+.mode-archive {
+  background-color: rgb(230, 122, 122);
+}
+
+@media only screen and (max-width: 850px) {
+  .todo__create {
+    margin-bottom: 50px;
+
+    &__form {
+      display: grid;
+      grid-template-columns: 200px 100px;
+      grid-template-rows: 50px 50px;
+      column-gap: 70px;
+      row-gap: 50px;
+    }
+  }
+}
