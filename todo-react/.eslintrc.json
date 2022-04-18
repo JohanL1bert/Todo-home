@@ -1,0 +1,133 @@
+{
+  "env": {
+    "browser": true,
+    "es2021": true,
+    "jest": true
+  },
+  "extends": [
+    "plugin:react/recommended",
+    "airbnb",
+    "plugin:react-hooks/recommended",
+    "plugin:prettier/recommended",
+    "plugin:import/recommended"
+  ],
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "ecmaFeatures": {
+      "jsx": true
+    },
+    "ecmaVersion": "latest",
+    "sourceType": "module",
+    "project": ["./tsconfig.json"]
+  },
+  "plugins": ["react", "@typescript-eslint", "prettier", "react-hooks", "import"],
+  "rules": {
+    "no-console": 1,
+    "curly": 1,
+    "eol-last": 1,
+    "eqeqeq": 1,
+    "no-bitwise": 1,
+    "no-caller": 1,
+    "no-eval": 1,
+    "no-multiple-empty-lines": 1,
+    "no-new-func": 1,
+    "no-new-wrappers": 1,
+    "no-shadow": 1,
+    "radix": 0,
+    "no-case-declarations": 0,
+    "spaced-comment": 1,
+    "valid-jsdoc": 1,
+    "react/jsx-filename-extension": [2, { "extensions": [".js", ".jsx", ".ts", ".tsx"] }],
+    "react/function-component-definition": 0,
+    "import/prefer-default-export": "off",
+    "import/order": [
+      1,
+      {
+        "newlines-between": "never",
+        "pathGroupsExcludedImportTypes": ["builtin"],
+        "groups": ["builtin", "external", "internal", "parent", "sibling"],
+        "pathGroups": [
+          {
+            "pattern": "app/**",
+            "group": "parent"
+          },
+          {
+            "pattern": "common/**",
+            "group": "internal"
+          },
+          {
+            "pattern": "entities/**",
+            "group": "sibling"
+          }
+        ]
+      }
+    ],
+    "no-restricted-imports": [
+      "error",
+      {
+        "patterns": ["./*", "../*,"]
+      }
+    ],
+    "import/extensions": [
+      "error",
+      "ignorePackages",
+      {
+        "js": "never",
+        "jsx": "never",
+        "ts": "never",
+        "tsx": "never",
+        "": "never"
+      }
+    ],
+    "jsx-a11y/media-has-caption": [
+      0,
+      {
+        "audio": ["Audio"],
+        "video": ["Video"],
+        "track": ["Track"]
+      }
+    ],
+    "jsx-a11y/anchor-has-content": [
+      "warn",
+      {
+        "components": ["Anchor"]
+      }
+    ],
+    "jsx-a11y/anchor-is-valid": [
+      "warn",
+      {
+        "components": ["Link"],
+        "specialLink": ["hrefLeft", "hrefRight"],
+        "aspects": ["noHref", "invalidHref", "preferButton"]
+      }
+    ],
+    "jsx-a11y/label-has-associated-control": [
+      2,
+      {
+        "assert": "either"
+      }
+    ],
+
+    "react/jsx-child-element-spacing": 1,
+    "react/self-closing-comp": [
+      "error",
+      {
+        "component": true,
+        "html": true
+      }
+    ],
+    "no-use-before-define": "off"
+  },
+  "settings": {
+    "react": {
+      "pragma": "React",
+      "version": "detect"
+    },
+    "import/resolver": {
+      "node": {
+        "extensions": [".js", ".jsx", ".ts", ".tsx"],
+        "paths": ["./src"]
+      }
+    }
+  }
+}
