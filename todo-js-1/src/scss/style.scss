@@ -322,3 +322,17 @@ textarea {
 .mode-archive {
   background-color: rgb(230, 122, 122);
 }
+
+@media only screen and (max-width: 850px) {
+  .todo__create {
+    margin-bottom: 50px;
+
+    &__form {
+      display: grid;
+      grid-template-columns: 200px 100px;
+      grid-template-rows: 50px 50px;
+      column-gap: 70px;
+      row-gap: 50px;
+    }
+  }
+}
