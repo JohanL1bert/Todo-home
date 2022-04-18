@@ -69,6 +69,28 @@ export class StateManager {
         active: false,
         archive: true,
       },
+      {
+        id: 6,
+        todoImg: `${todoHelpImg.quote}`,
+        todoName: 'Some info',
+        todoCreated: 'January 10, 2021',
+        todoCategory: 'Quote',
+        todoContent: 'Some content',
+        todoDates: '',
+        active: false,
+        archive: true,
+      },
+      {
+        id: 7,
+        todoImg: `${todoHelpImg.idea}`,
+        todoName: 'Inline idead',
+        todoCreated: 'April 10, 2021',
+        todoCategory: 'Idea',
+        todoContent: 'Inline ideaa',
+        todoDates: '',
+        active: true,
+        archive: false,
+      },
     ];
   }
 }
