@@ -1,5 +1,4 @@
 import { todoHelpImg } from './helpers';
-import { IStoreTodo } from './interfaces';
 
 export class StateManager {
   store: Array<{

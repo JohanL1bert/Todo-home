@@ -24,11 +24,20 @@ $color-white-bg: rgb(248, 248, 248);
 @mixin todo-inner {
   display: flex;
   align-items: center;
-  width: 100px;
+  width: 200px;
 }
 
 @mixin todo-func {
   display: flex;
   justify-content: space-between;
   width: 100px;
+}
+
+@mixin fonts-text {
+  font-family: 'Times New Roman', Times, serif;
+  font-size: 15px;
+  font-weight: 500;
+}
+
+@mixin fonts-header {
 }

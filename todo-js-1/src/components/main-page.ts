@@ -37,7 +37,6 @@ export class MainPage {
   public enterPress(event: KeyboardEvent) {
     if (event.key === 'Enter') {
       event.preventDefault();
-      return false;
     }
   }
 
@@ -115,9 +114,9 @@ export class MainPage {
     const element = event.target as HTMLElement;
     const getLiElement = element.closest('li');
     getLiElement?.classList.add('mode-edit');
+    const inputHtml = getLiElement?.querySelector('input') as HTMLInputElement;
 
     if (element.classList.contains('edit-img')) {
-      const inputHtml = getLiElement?.querySelector('.todo__item__name-input') as HTMLInputElement;
       const inputValue = inputHtml.value;
       const getId = Number(getLiElement?.dataset.todo);
       const newStore = this.store.store.map((el) => {
@@ -170,6 +169,11 @@ export class MainPage {
   }
 
   private unArchiveBtn(event: Event) {
+    const getLi = document.querySelectorAll('.archive__item');
+    if (getLi.length === 1) {
+      this.archiveAllTodoBtn.classList.remove('mode-archive');
+    }
+
     const htmlEl = event.target as HTMLElement;
     const liEl = htmlEl.closest('li');
     const getId = liEl?.dataset.todo;
@@ -192,7 +196,7 @@ export class MainPage {
     const getTodoEdit = document.querySelectorAll('.todo__item__change');
     const getTodoArchive = document.querySelectorAll('.todo__item__archived');
     const getTodoDelete = document.querySelectorAll('.todo__item__delete');
-    const getArchiveUn = document.querySelectorAll('.archive__item');
+    const getArchiveUn = document.querySelectorAll('.archive__item__archived');
     const getArchiveDelete = document.querySelectorAll('.archive__item__delete');
 
     getTodoArchive.forEach((element) =>
@@ -221,14 +225,20 @@ export class MainPage {
     this.init();
   }
 
-  private archiveAllTodos() {
+  private archiveAllTodos(event: Event) {
     this.toggleArchive = !this.toggleArchive;
 
+    const element = event.target as HTMLImageElement;
+
     if (this.toggleArchive) {
+      element.classList.add('mode-archive');
+
       this.store.store.forEach((element) => {
         (element.active = false), (element.archive = true);
       });
     } else {
+      element.classList.remove('mode-archive');
+
       this.store.store.forEach((element) => {
         (element.active = true), (element.archive = false);
       });
@@ -266,22 +276,20 @@ export class MainPage {
         ActiveTodo.task.img = element.todoImg;
       }
       if (element.todoCategory === 'Random Thought') {
-        if (element.active) ActiveTodo.random.active += 1;
-        if (element.archive) ActiveTodo.random.archive += 1;
+        element.active ? (ActiveTodo.random.active += 1) : (ActiveTodo.random.archive += 1);
 
         ActiveTodo.random.name = element.todoCategory;
         ActiveTodo.random.img = element.todoImg;
       }
       if (element.todoCategory === 'Idea') {
-        if (element.active) ActiveTodo.idea.active += 1;
-        if (element.archive) ActiveTodo.idea.archive += 1;
+        element.active ? (ActiveTodo.idea.active += 1) : (ActiveTodo.idea.archive += 1);
 
         ActiveTodo.idea.name = element.todoCategory;
         ActiveTodo.idea.img = element.todoImg;
       }
       if (element.todoCategory === 'Quote') {
-        if (element.active) ActiveTodo.quote.active += 1;
-        if (element.archive) ActiveTodo.quote.archive += 1;
+        element.active ? (ActiveTodo.quote.active += 1) : (ActiveTodo.quote.archive += 1);
+
         ActiveTodo.quote.name = element.todoCategory;
         ActiveTodo.quote.img = element.todoImg;
       }
@@ -341,6 +349,9 @@ export class MainPage {
     };
 
     this.store.store.push(createNewObj);
+    this.contentName.value = '';
+    this.contentCont.value = '';
+    this.selectOpt.value = 'Task';
 
     this.todoForm.classList.remove('mode-visible');
     this.replaceAllHtml();
@@ -360,7 +371,7 @@ export class MainPage {
     const arrActive = Object.keys(htmlActive).map((key) => htmlActive[key as keyof IActiveTodo]);
     const activeNote = arrActive
       .filter((element) => element.active > 0 || element.archive > 0)
-      .sort((a, b) => Number(a.active) - Number(b.active)) as unknown as IActiveNote[]; //Поганий каст
+      .sort((a, b) => Number(a.active) - Number(b.active)) as unknown as IActiveNote[];
 
     const htmlActiveNote = activeNote.map((el) => this.createNoteAct(el));
     htmlActiveNote.map((element) => this.noteBodyItems.insertAdjacentHTML('afterbegin', element));
