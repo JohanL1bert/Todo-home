@@ -1,0 +1,50 @@
+archive {
+  &__item {
+    @include li-container;
+    padding: 10px;
+
+    &__name__inner {
+      @include todo-inner;
+    }
+
+    &__img {
+      @include sizeImg(40px, 40px);
+      margin-right: 10px;
+    }
+
+    &__created {
+      width: 100px;
+    }
+
+    &__category {
+      width: 100px;
+      text-align: center;
+    }
+
+    &__content {
+      width: 250px;
+      max-width: 150px;
+      word-wrap: break-word;
+    }
+
+    &__dates {
+      width: 100px;
+      max-width: 100px;
+    }
+
+    &__func {
+      @include todo-func;
+      width: 70px;
+    }
+    &__archived {
+      @include sizeImg(25px, 25px);
+      cursor: pointer;
+      background-color: rgb(230, 122, 122);
+    }
+    &__delete {
+      @include sizeImg(25px, 25px);
+      cursor: pointer;
+      margin-right: 5px;
+    }
+  }
+}

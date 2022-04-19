@@ -11,10 +11,10 @@ export const TodoCreate = () => {
           </label>
         </div>
         <div className="todo__create__content">
-          <label htmlFor="" className="todo__create__content-label">
+          <div className="todo__create__content-name">
             Content:
             <textarea className="todo__create__content-textarea" />
-          </label>
+          </div>
         </div>
         <div className="todo__create__category">
           <select name="select" className="todo__create__category-select">

@@ -1,0 +1,67 @@
+.todo {
+  &__item {
+    @include li-container;
+    padding: 10px;
+
+    &__img {
+      @include sizeImg(40px, 40px);
+      margin-right: 10px;
+    }
+
+    &__inner {
+      @include todo-inner;
+    }
+
+    &__name {
+      &-input {
+        display: none;
+        border: 1px solid #ddd;
+        max-width: 110px;
+
+        &:focus {
+          color: #333;
+        }
+      }
+    }
+
+    &__created {
+      width: 100px;
+    }
+
+    &__category {
+      width: 100px;
+      text-align: center;
+    }
+
+    &__content {
+      width: 250px;
+      max-width: 150px;
+      word-wrap: break-word;
+    }
+
+    &__wrapper {
+      @include todo-func;
+    }
+
+    &__dates {
+      width: 100px;
+      max-width: 100px;
+    }
+
+    &__change {
+      @include sizeImg(25px, 25px);
+      cursor: pointer;
+    }
+
+    &__archived {
+      @include sizeImg(25px, 25px);
+      cursor: pointer;
+    }
+
+    &__delete {
+      @include sizeImg(25px, 25px);
+      cursor: pointer;
+      margin-right: 5px;
+    }
+  }
+}

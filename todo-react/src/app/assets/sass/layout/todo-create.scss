@@ -1,0 +1,76 @@
+.todo {
+  &__create {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 50px;
+
+    @media only screen and (max-width: 850px) {
+      margin-bottom: 50px;
+    }
+
+    &__form {
+      opacity: 0;
+      visibility: hidden;
+      display: flex;
+      align-items: center;
+      height: 100px;
+      margin-bottom: 50px;
+
+      @media only screen and (max-width: 850px) {
+        display: grid;
+        grid-template-columns: 200px 100px;
+        grid-template-rows: 50px 50px;
+        column-gap: 70px;
+        row-gap: 50px;
+      }
+    }
+
+    &__name {
+      position: absolute;
+      top: 100%;
+      left: 0;
+      max-width: 100%;
+
+      &-label {
+        position: relative;
+        width: 250px;
+        display: inline-block;
+        top: -20%;
+      }
+    }
+
+    &__category-select {
+      margin-right: 50px;
+    }
+
+    &__btn {
+      padding: 10px;
+    }
+
+    &__content {
+      position: absolute;
+      top: 100%;
+      left: 0;
+      height: 50px;
+      resize: none;
+    }
+
+    &__visible-btn {
+      @include sizeImg(60px, 60px);
+      border: 1px solid black;
+      border-radius: 5px;
+      background-color: white;
+      cursor: pointer;
+      transition: 0.5s ease-in;
+      margin-right: 10px;
+
+      &:hover {
+        transform: scale(1.02);
+      }
+
+      &:active {
+        background-color: rgb(212, 156, 156);
+      }
+    }
+  }
+}

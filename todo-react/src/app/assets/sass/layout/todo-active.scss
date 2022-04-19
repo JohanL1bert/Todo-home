@@ -1,0 +1,36 @@
+.todo {
+  &__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-radius: 10px;
+    color: $color-white-bg;
+    background-color: #888;
+    margin-bottom: 20px;
+    @include fonts-text;
+    font-size: 17px;
+
+    &__name {
+      margin-left: 50px;
+    }
+
+    &__icon {
+      display: flex;
+      justify-content: space-between;
+      width: 90px;
+
+      &-img {
+        @include sizeImg(35px, 35px);
+        cursor: pointer;
+      }
+
+      margin-right: 10px;
+    }
+  }
+  &__body {
+    &__items {
+      @include reset-ul;
+      @include fonts-text;
+    }
+  }
+}
