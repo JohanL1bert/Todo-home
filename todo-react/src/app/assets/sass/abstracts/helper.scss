@@ -1,0 +1,27 @@
+.mode-visible {
+  visibility: visible;
+  opacity: 1;
+  transition: 1.5s ease-in-out;
+}
+
+.mode-edit .todo__item__name {
+  display: none;
+}
+
+.mode-edit .todo__item__name-input {
+  display: inline-block;
+  width: 220px;
+}
+
+input,
+textarea {
+  outline: none;
+}
+
+.edit-img {
+  background-color: rgb(10, 189, 129);
+}
+
+.mode-archive {
+  background-color: rgb(230, 122, 122);
+}

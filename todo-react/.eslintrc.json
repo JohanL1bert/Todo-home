@@ -116,7 +116,9 @@
         "html": true
       }
     ],
-    "no-use-before-define": "off"
+    "no-use-before-define": "off",
+    "default-param-last": 0,
+    "react/jsx-props-no-spreading": 0
   },
   "settings": {
     "react": {
