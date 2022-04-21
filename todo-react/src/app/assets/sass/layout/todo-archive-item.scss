@@ -1,4 +1,4 @@
-archive {
+.archive {
   &__item {
     @include li-container;
     padding: 10px;
@@ -32,7 +32,7 @@ archive {
       max-width: 100px;
     }
 
-    &__func {
+    &__img {
       @include todo-func;
       width: 70px;
     }

@@ -12,7 +12,7 @@
       opacity: 0;
       visibility: hidden;
       display: flex;
-      align-items: center;
+      align-items: flex-start;
       height: 100px;
       margin-bottom: 50px;
 
@@ -26,21 +26,25 @@
     }
 
     &__name {
-      position: absolute;
-      top: 100%;
-      left: 0;
-      max-width: 100%;
-
       &-label {
         position: relative;
         width: 250px;
         display: inline-block;
         top: -20%;
       }
+
+      &-input {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        max-width: 100%;
+      }
     }
 
     &__category-select {
+      margin-top: 20px;
       margin-right: 50px;
+      margin-left: 50px;
     }
 
     &__btn {
@@ -48,11 +52,13 @@
     }
 
     &__content {
-      position: absolute;
-      top: 100%;
-      left: 0;
-      height: 50px;
-      resize: none;
+      &-name {
+        margin: 0;
+      }
+
+      &-textarea {
+        resize: none;
+      }
     }
 
     &__visible-btn {

@@ -4,11 +4,12 @@ import 'app/assets/sass/index.scss';
 import 'normalize.css';
 import { legacy_createStore as createStore } from 'redux';
 import { Provider } from 'react-redux';
+import { composeWithDevTools } from 'redux-devtools-extension';
 import reportWebVitals from 'reportWebVitals';
 import { App } from 'app/App';
-import { reducer } from 'app/rootReducer';
+import { rootReducer } from 'app/store/rootReducer';
 
-const store = createStore(reducer);
+const store = createStore(rootReducer, composeWithDevTools());
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
 root.render(

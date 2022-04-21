@@ -1,6 +1,23 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
+import { IStoreTodo, IStoreTodoState } from 'common/interfaces/interfaces';
+import { TodoStatusItem } from 'common/components/TodoStatusItem';
+import { NotFound } from 'common/components/NotFound';
 
 export const TodoStatus = () => {
+  const todoStatus = useSelector((state: IStoreTodoState) => state.todos);
+
+  const filteredData = () => {
+    const todoCategories = todoStatus.reduce((acc: any, curr: IStoreTodo) => {
+      console.log(curr);
+      return acc;
+    }, []);
+    return todoCategories;
+  };
+
+  const filteredTodo = filteredData();
+  console.log(filteredTodo, 's');
+
   return (
     <section className="note">
       <div className="container">
@@ -12,7 +29,16 @@ export const TodoStatus = () => {
           </div>
           <div className="note__body">
             <div className="note__body__inner">
-              <ul className="note__body__items" />
+              <ul className="note__body__items">
+                {filteredTodo.length > 0 ? (
+                  filteredTodo.map((el: any, index: number) => (
+                    // eslint-disable-next-line react/no-array-index-key
+                    <TodoStatusItem key={index} todo={el} />
+                  ))
+                ) : (
+                  <NotFound />
+                )}
+              </ul>
             </div>
           </div>
         </div>
@@ -20,3 +46,15 @@ export const TodoStatus = () => {
     </section>
   );
 };
+/* acc[curr.todoCategory] = object;
+if (acc[curr.todoCategory]) {
+  object.name = curr.todoCategory;
+  object.count = (+curr.todoCategory || 0) + 1;
+  object.active = +curr.active ? +1 : +0;
+  object.archive = +curr.archive ? +1 : +0;
+  object.todoImg = curr.todoImg;
+}
+
+console.log(object, 'object');
+console.log(acc);
+return acc; */

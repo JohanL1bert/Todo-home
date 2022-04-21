@@ -10,5 +10,10 @@ export interface IStoreTodo {
   archive: boolean;
 }
 export interface IStoreTodoState {
-  state: IStoreTodo[];
+  todos: IStoreTodo[];
+}
+
+export interface ITodoStatus {
+  property: { [key: string]: string };
+  img: string;
 }
