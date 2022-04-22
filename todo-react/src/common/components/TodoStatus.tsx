@@ -1,3 +1,4 @@
+/* eslint-disable no-param-reassign */
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { IStoreTodo, IStoreTodoState } from 'common/interfaces/interfaces';
@@ -9,15 +10,36 @@ export const TodoStatus = () => {
 
   const filteredData = () => {
     const todoCategories = todoStatus.reduce((acc: any, curr: IStoreTodo) => {
-      console.log(curr);
+      acc[curr.todoCategory] = {
+        category: curr.todoCategory,
+        img: curr.todoImg,
+        active: 0,
+        archive: 0,
+      };
       return acc;
     }, []);
-    return todoCategories;
+
+    const newArray = Object.values(todoCategories);
+
+    const value = newArray.map((el: any) => {
+      // eslint-disable-next-line array-callback-return
+      todoStatus.map((secondEl: any) => {
+        if (el.category === secondEl.todoCategory) {
+          if (secondEl.active) {
+            el.active += 1;
+          }
+          if (secondEl.archive) {
+            el.archive += 1;
+          }
+        }
+      });
+      return el;
+    });
+
+    return value;
   };
 
   const filteredTodo = filteredData();
-  console.log(filteredTodo, 's');
-
   return (
     <section className="note">
       <div className="container">
@@ -46,15 +68,3 @@ export const TodoStatus = () => {
     </section>
   );
 };
-/* acc[curr.todoCategory] = object;
-if (acc[curr.todoCategory]) {
-  object.name = curr.todoCategory;
-  object.count = (+curr.todoCategory || 0) + 1;
-  object.active = +curr.active ? +1 : +0;
-  object.archive = +curr.archive ? +1 : +0;
-  object.todoImg = curr.todoImg;
-}
-
-console.log(object, 'object');
-console.log(acc);
-return acc; */

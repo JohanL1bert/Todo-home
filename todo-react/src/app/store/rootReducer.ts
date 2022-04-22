@@ -1,4 +1,3 @@
-/* import { IStoreTodoState } from 'common/interfaces/interfaces'; */
 import { combineReducers } from 'redux';
 import { todoReducer } from 'app/store/reducer';
 

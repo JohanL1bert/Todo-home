@@ -28,10 +28,10 @@ export const TodoCreate = () => {
     const { contentText, dateContent } = parseContentData(textAreaValue!);
 
     const dateObj = new Date();
-    const date = dateObj.toLocaleDateString('en-Us', optionsDate);
+    const created = dateObj.toLocaleDateString('en-Us', optionsDate);
 
     dispatch(
-      actionAddTodo(id, img, inputValue!, date, category, contentText, dateContent, true, false)
+      actionAddTodo(id, img, inputValue!, created, category, contentText, dateContent, true, false)
     );
 
     inputName.current!.value = '';
