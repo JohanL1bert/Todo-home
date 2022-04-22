@@ -6,12 +6,12 @@ export const ARCHIVE_TODO = 'ARCHIVE_TODO';
 export const DELETE_TODO = 'DELETE_TODO';
 export const UNARCHIVE_TODO = 'UNARCHIVE_TODO';
 
-export const actionArchiveAllTodo = () => {
+export const actionArchiveAllTodo = (act: boolean, arch: boolean) => {
   return {
     type: ARCHIVE_ALL_TODO,
     payload: {
-      archive: true,
-      active: false,
+      archive: act,
+      active: arch,
     },
   };
 };

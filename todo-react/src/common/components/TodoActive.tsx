@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { TodoCreate } from 'common/components/TodoCreate';
 import { IStoreTodoState } from 'common/interfaces/interfaces';
@@ -8,6 +8,7 @@ import { NotFound } from 'common/components/NotFound';
 import { actionArchiveAllTodo, actionDeleteAllTodo } from 'app/store/action';
 
 export const TodoActive = () => {
+  const [archiveState, setArchiveState] = useState<boolean>(false);
   const todo = useSelector((state: IStoreTodoState) => state.todos);
   const filteredTodo = todo.filter((el) => el.active);
 
@@ -18,7 +19,8 @@ export const TodoActive = () => {
   };
 
   const archiveTodos = () => {
-    dispatch(actionArchiveAllTodo());
+    setArchiveState(!archiveState);
+    dispatch(actionArchiveAllTodo(!archiveState, archiveState));
   };
 
   return (
@@ -35,7 +37,9 @@ export const TodoActive = () => {
               <img
                 src={todoHelpImg.arhcive}
                 alt="archive all todo list"
-                className="todo__header__icon-img icon-archive"
+                className={`todo__header__icon-img icon-archive ${
+                  archiveState ? 'mode-archive' : null
+                }`}
                 onClick={archiveTodos}
                 onKeyUp={archiveTodos}
                 aria-hidden="true"

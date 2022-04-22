@@ -1,7 +1,12 @@
 /* eslint-disable no-param-reassign */
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { IStoreTodo, IStoreTodoState, TStatusTodo } from 'common/interfaces/interfaces';
+import {
+  IStoreTodo,
+  IStoreTodoState,
+  TStatusTodo,
+  TStatusCategories,
+} from 'common/interfaces/interfaces';
 import { TodoStatusItem } from 'common/components/TodoStatusItem';
 import { NotFound } from 'common/components/NotFound';
 
@@ -9,7 +14,7 @@ export const TodoStatus = () => {
   const todoStatus = useSelector((state: IStoreTodoState) => state.todos);
 
   const filteredData = () => {
-    const todoCategories = todoStatus.reduce(
+    const createObjectStatus = todoStatus.reduce(
       (acc: Array<never[] | TStatusTodo>, curr: IStoreTodo) => {
         acc[curr.todoCategory as keyof {}] = {
           category: curr.todoCategory,
@@ -20,11 +25,11 @@ export const TodoStatus = () => {
         return acc;
       },
       []
-    );
+    ) as TStatusCategories | never[];
 
-    const newArray = Object.values(todoCategories) as Array<TStatusTodo> | [];
+    const getStatusArr = Object.values(createObjectStatus);
 
-    const value = newArray.map((el) => {
+    const filteredArrStatus = getStatusArr.map((el) => {
       // eslint-disable-next-line array-callback-return
       todoStatus.map((secondEl) => {
         if (el.category === secondEl.todoCategory) {
@@ -39,7 +44,7 @@ export const TodoStatus = () => {
       return el;
     });
 
-    return value;
+    return filteredArrStatus;
   };
 
   const filteredTodo = filteredData();

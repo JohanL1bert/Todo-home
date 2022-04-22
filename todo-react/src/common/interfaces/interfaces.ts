@@ -105,3 +105,7 @@ export type TStatusTodo = {
   active: number;
   archive: number;
 };
+
+export type TStatusCategories = {
+  [key: string]: TStatusTodo;
+};
