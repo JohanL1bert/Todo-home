@@ -1,7 +1,7 @@
 /* eslint-disable no-param-reassign */
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { IStoreTodo, IStoreTodoState } from 'common/interfaces/interfaces';
+import { IStoreTodo, IStoreTodoState, TStatusTodo } from 'common/interfaces/interfaces';
 import { TodoStatusItem } from 'common/components/TodoStatusItem';
 import { NotFound } from 'common/components/NotFound';
 
@@ -9,21 +9,24 @@ export const TodoStatus = () => {
   const todoStatus = useSelector((state: IStoreTodoState) => state.todos);
 
   const filteredData = () => {
-    const todoCategories = todoStatus.reduce((acc: any, curr: IStoreTodo) => {
-      acc[curr.todoCategory] = {
-        category: curr.todoCategory,
-        img: curr.todoImg,
-        active: 0,
-        archive: 0,
-      };
-      return acc;
-    }, []);
+    const todoCategories = todoStatus.reduce(
+      (acc: Array<never[] | TStatusTodo>, curr: IStoreTodo) => {
+        acc[curr.todoCategory as keyof {}] = {
+          category: curr.todoCategory,
+          img: curr.todoImg,
+          active: 0,
+          archive: 0,
+        };
+        return acc;
+      },
+      []
+    );
 
-    const newArray = Object.values(todoCategories);
+    const newArray = Object.values(todoCategories) as Array<TStatusTodo> | [];
 
-    const value = newArray.map((el: any) => {
+    const value = newArray.map((el) => {
       // eslint-disable-next-line array-callback-return
-      todoStatus.map((secondEl: any) => {
+      todoStatus.map((secondEl) => {
         if (el.category === secondEl.todoCategory) {
           if (secondEl.active) {
             el.active += 1;
@@ -53,7 +56,7 @@ export const TodoStatus = () => {
             <div className="note__body__inner">
               <ul className="note__body__items">
                 {filteredTodo.length > 0 ? (
-                  filteredTodo.map((el: any, index: number) => (
+                  filteredTodo.map((el, index: number) => (
                     // eslint-disable-next-line react/no-array-index-key
                     <TodoStatusItem key={index} todo={el} />
                   ))

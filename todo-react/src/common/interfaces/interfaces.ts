@@ -98,3 +98,10 @@ export type TTodos =
   | IActionArchiveTodo
   | IActionDeleteTodo
   | IActionUnArchiveTodo;
+
+export type TStatusTodo = {
+  category: string;
+  img: string;
+  active: number;
+  archive: number;
+};
