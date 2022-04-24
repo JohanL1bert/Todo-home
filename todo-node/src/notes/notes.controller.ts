@@ -6,6 +6,7 @@ import {
   Post,
   Patch,
   Body,
+  ParseIntPipe,
 } from '@nestjs/common';
 import { CreatTodoNotesDto, UpdateTodoNotesDto } from './dto/notes-dto-todo';
 import { NotesService } from './notes.service';
@@ -20,12 +21,15 @@ export class NotesController {
   }
 
   @Delete(':id')
-  removeTodo(@Param('id') id: string) {
-    return this.notes.deleteNotes(Number(id));
+  removeTodo(@Param('id', ParseIntPipe) id: number) {
+    return this.notes.deleteNotes(id);
   }
 
   @Patch(':id')
-  editTodo(@Param('id') id: string, @Body() todo: UpdateTodoNotesDto) {
+  editTodo(
+    @Param('id', ParseIntPipe) id: number,
+    @Body() todo: UpdateTodoNotesDto,
+  ) {
     return this.notes.updateNotes(id, todo);
   }
 
@@ -40,7 +44,7 @@ export class NotesController {
   }
 
   @Get(':id')
-  getOneTodo(@Param('id') id: string) {
-    return this.notes.getOneNotes(Number(id));
+  getOneTodo(@Param('id', ParseIntPipe) id: number) {
+    return this.notes.getOneNotes(id);
   }
 }

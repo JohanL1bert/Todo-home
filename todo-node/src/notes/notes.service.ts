@@ -129,7 +129,7 @@ export class NotesService {
     return [todoObject, findTodoindex];
   }
 
-  updateNotes(id: string, todoUpdate: Omit<Notes, 'id'>) {
+  updateNotes(id: number, todoUpdate: Omit<Notes, 'id'>) {
     const [todoObject, todoIndex] = this.findTodos(Number(id));
 
     const updateTodo = Object.assign({}, todoObject);
@@ -200,23 +200,27 @@ export class NotesService {
         return acc;
       },
       [],
-    ) as StatusTodoNotesDto | never[];
+    );
 
-    const getStatusArr = Object.values(createObjectStatus);
+    const getStatusArr = Object.values(
+      createObjectStatus,
+    ) as never as StatusTodoNotesDto;
 
-    const filteredArrStatus = getStatusArr.map((el) => {
-      todoArray.map((secondEl) => {
-        if (el.category === secondEl.todoCategory) {
-          if (secondEl.active) {
-            el.active += 1;
+    const filteredArrStatus = <StatusTodoNotesDto>getStatusArr.map(
+      (el: StatusTodoNotesDto) => {
+        todoArray.map((secondEl) => {
+          if (el.category === secondEl.todoCategory) {
+            if (secondEl.active) {
+              el.active += 1;
+            }
+            if (secondEl.archive) {
+              el.archive += 1;
+            }
           }
-          if (secondEl.archive) {
-            el.archive += 1;
-          }
-        }
-      });
-      return el;
-    });
+        });
+        return el;
+      },
+    );
 
     return filteredArrStatus;
   }
