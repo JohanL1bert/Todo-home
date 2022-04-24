@@ -190,8 +190,8 @@ export class NotesService {
 
   filterStatsTodo(todoArray: Array<Notes>) {
     const createObjectStatus = todoArray.reduce(
-      (acc: Array<never[] | StatusTodoNotesDto>, curr) => {
-        acc[curr.todoCategory as keyof Record<string, never>] = {
+      (acc: Array<StatusTodoNotesDto> | Record<string, never>, curr) => {
+        acc[curr.todoCategory] = {
           category: curr.todoCategory,
           img: curr.todoImg,
           active: 0,
@@ -204,23 +204,21 @@ export class NotesService {
 
     const getStatusArr = Object.values(
       createObjectStatus,
-    ) as never as StatusTodoNotesDto;
+    ) as never[] as StatusTodoNotesDto[];
 
-    const filteredArrStatus = <StatusTodoNotesDto>getStatusArr.map(
-      (el: StatusTodoNotesDto) => {
-        todoArray.map((secondEl) => {
-          if (el.category === secondEl.todoCategory) {
-            if (secondEl.active) {
-              el.active += 1;
-            }
-            if (secondEl.archive) {
-              el.archive += 1;
-            }
+    const filteredArrStatus = getStatusArr.map((el) => {
+      todoArray.map((secondEl) => {
+        if (el.category === secondEl.todoCategory) {
+          if (secondEl.active) {
+            el.active += 1;
           }
-        });
-        return el;
-      },
-    );
+          if (secondEl.archive) {
+            el.archive += 1;
+          }
+        }
+      });
+      return el;
+    });
 
     return filteredArrStatus;
   }
