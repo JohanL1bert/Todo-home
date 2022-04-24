@@ -1,4 +1,10 @@
-import { IsString, IsNumber, IsBoolean, IsNotEmpty } from 'class-validator';
+import {
+  IsString,
+  IsNumber,
+  IsBoolean,
+  IsNotEmpty,
+  IsOptional,
+} from 'class-validator';
 
 export class CreatTodoNotesDto {
   @IsString()
@@ -31,30 +37,38 @@ export class CreatTodoNotesDto {
 
 export class UpdateTodoNotesDto {
   @IsString()
+  @IsOptional()
   todoImg: string;
 
   @IsString()
+  @IsOptional()
   @IsNotEmpty()
   todoName: string;
 
   @IsString()
+  @IsOptional()
   @IsNotEmpty()
   todoCreated: string;
 
   @IsString()
+  @IsOptional()
   @IsNotEmpty()
   todoCategory: string;
 
   @IsString()
+  @IsOptional()
   todoContent: string;
 
   @IsString()
+  @IsOptional()
   todoDates: string;
 
   @IsBoolean()
+  @IsOptional()
   active: boolean;
 
   @IsBoolean()
+  @IsOptional()
   archive: boolean;
 }
 
@@ -62,15 +76,19 @@ export class StatusTodoNotesDto {
   [x: string]: any;
 
   @IsString()
+  @IsOptional()
   @IsNotEmpty()
   category: string;
 
   @IsString()
+  @IsOptional()
   img: string;
 
   @IsNumber()
+  @IsOptional()
   active: number;
 
   @IsNumber()
+  @IsOptional()
   archive: number;
 }
