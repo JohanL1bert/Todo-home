@@ -42,3 +42,5 @@
 All field is required. If is not exist return status code 400 and message about field is not exist and type
 
 9. http://localhost:3005/notes/number all fields is not required. When you send request without all fields new fields will change and old ones remain
+
+# Additional: There may be some errors in the description
